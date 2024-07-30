@@ -1,3 +1,12 @@
+import FormInputData from "../../components/formInputData";
+import RootLayout from "../../layout/layout";
+
 export default function Home() {
-  return <></>;
+  return (
+    <>
+      <RootLayout>
+        <FormInputData />
+      </RootLayout>
+    </>
+  );
 }

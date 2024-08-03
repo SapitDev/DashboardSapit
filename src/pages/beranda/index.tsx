@@ -1,10 +1,12 @@
 import React from "react";
-import Laporan from "@/components/tabel/Laporan";
+import Laporan from "@/components/tabel/laporan";
 
 export default function Beranda() {
   return (
     <>
-      <Laporan />
+      <div>
+        <Laporan />
+      </div>
     </>
   );
 }

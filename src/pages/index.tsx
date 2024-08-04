@@ -1,12 +1,10 @@
-import FormInputData from "../../components/formInputData";
-import RootLayout from "../../layout/layout";
+import DashboardLayout from "../layout/layout";
+import Beranda from "@/pages/beranda/index";
 
 export default function Home() {
   return (
-    <>
-      <RootLayout>
-        <FormInputData />
-      </RootLayout>
-    </>
+    <DashboardLayout>
+      <Beranda />
+    </DashboardLayout>
   );
 }

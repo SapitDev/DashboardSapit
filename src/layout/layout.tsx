@@ -11,16 +11,16 @@ export default function DashboardLayout({
 
   return (
     <>
-      <div className="flex">
+      <div className="flex bg-gray-100">
         <Sidebar open={open} setOpen={setOpen} />
-        <div>
+        <div className="w-full">
           <Header
             title="Dashboard"
             userName="Sapit"
             userStatus="Admin"
             profilePicture="/logo.png"
           />
-          <section className={`duration-300 p-5 w-full`}>{children}</section>
+          <div className={`duration-300 p-5 w-full`}>{children}</div>
         </div>
       </div>
     </>

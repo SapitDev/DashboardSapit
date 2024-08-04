@@ -1,10 +1,13 @@
 import React from "react";
 import FormInputData from "../../components/formInputData";
+import FormLayout from "@/layout/layout";
 
 export default function InputData() {
   return (
-    <div>
-      <FormInputData />
-    </div>
+    <>
+      <FormLayout>
+        <FormInputData />
+      </FormLayout>
+    </>
   );
 }

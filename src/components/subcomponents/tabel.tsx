@@ -18,6 +18,8 @@ type DataItem = {
 
 type TabelProps = {
   data: DataItem[];
+  currentPage: number;
+  itemsPerPage: number;
 };
 
 const calculateAge = (birthdate: string): number => {
@@ -33,11 +35,11 @@ const calculateAge = (birthdate: string): number => {
   return age;
 };
 
-const Tabel: React.FC<TabelProps> = ({ data }) => {
+const Tabel: React.FC<TabelProps> = ({ data, currentPage, itemsPerPage }) => {
   return (
     <>
-      <div className="">
-        <table className="table-auto w-full text-xs font-secondary">
+      <div className="font-primary">
+        <table className="table-auto w-full text-sm ">
           <thead>
             <tr>
               <th className="px-4 py-2 bg-primary-600 text-white rounded-tl-lg">
@@ -73,7 +75,7 @@ const Tabel: React.FC<TabelProps> = ({ data }) => {
                 Nama Ibu Kandung
               </th>
               <th className="px-4 py-2 bg-primary-600 text-white rounded-tr-lg">
-                Nama Ibu Kandung
+                Data Lengkap
               </th>
             </tr>
           </thead>
@@ -84,7 +86,8 @@ const Tabel: React.FC<TabelProps> = ({ data }) => {
                 className={index % 2 === 0 ? "bg-primary-50" : "bg-primary-100"}
               >
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {index + 1}
+                  {currentPage * itemsPerPage + index + 1}{" "}
+                  {/* Adjust numbering */}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   {entry.nama}

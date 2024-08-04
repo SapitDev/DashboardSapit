@@ -1,10 +1,9 @@
-// pages/form.js
 import React from "react";
 
 export default function FormInputData() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form className="container mx-auto p-10 bg-white shadow-lg rounded-lg w-full max-w-2xl">
+    <div className="flex items-center justify-center ">
+      <form className="container mx-auto p-10 bg-white shadow-lg rounded-lg w-full ">
         <div className="grid gap-6 mb-6 md:grid-cols-2">
           <div>
             <label

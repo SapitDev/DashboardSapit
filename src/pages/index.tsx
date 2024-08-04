@@ -1,4 +1,4 @@
-import DashboardLayout from "../layout/layout";
+import DashboardLayout from "@/layout/layout";
 import Beranda from "@/pages/beranda/index";
 
 export default function Home() {

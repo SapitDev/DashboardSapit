@@ -24,14 +24,14 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
       spacing: false,
     },
     {
-      title: "Administrasi",
-      path: "/administrasi",
+      title: "Rincian",
+      path: "#",
       icon: <FaReadme />,
       spacing: true,
     },
     {
-      title: "Laporan",
-      path: "/laporan",
+      title: "Print",
+      path: "#",
       icon: <TbReportAnalytics />,
       spacing: false,
     },
@@ -44,13 +44,13 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
 
   return (
     <div
-      className={`bg-primary-600 h-auto fixed left-0  py-5 pt-8 font-poppins  ${
+      className={`bg-primary-600 h-screen fixed left-0 py-5 pt-8 font-poppins duration-300  ${
         open ? "w-72" : "w-20"
       } duration-300 relative`}
     >
       {/* Title */}
       <IoMdArrowDropleft
-        className={`bg-transparent right-5 text-white text-3xl rounded-full absolute top-9 cursor-pointer ${
+        className={`bg-transparent right-4 text-white text-3xl rounded-full absolute top-9 cursor-pointer  ${
           !open && "rotate-180 right-8"
         }`}
         onClick={() => setOpen(!open)}
@@ -66,7 +66,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
           height={50}
         />
         <h1
-          className={`text-white text-2xl font-bold duration-500 mt-[0.20rem] ${
+          className={`text-white text-2xl text-center font-bold duration-500 mt-[0.20rem] ${
             !open && "hidden"
           }`}
         >
@@ -75,7 +75,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
       </div>
 
       {/* Sub Menu */}
-      <ul className="pt-10 ">
+      <ul className="pt-10 items-center">
         {Menus.map((menu, index) => (
           <li
             key={index}

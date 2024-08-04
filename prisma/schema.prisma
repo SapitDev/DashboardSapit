@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Kawil {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  nama    String
+  email   String @unique
+  password String
+  dusun   String
+  warga   DataWarga[] @relation("KawilToWarga")
+}
+
+model DataWarga {
+  id                     String @id @default(auto()) @map("_id") @db.ObjectId
+  nama                   String
+  nik_kk                 String
+  nik                    String @unique
+  jenis_kelamin          String
+  status_perkawinan      String
+  tempat_lahir           String
+  tanggal_lahir          String
+  pendidikan_terakhir    String
+  pekerjaan              String
+  alamat_lengkap         String
+  kedudukan_dalam_keluarga String
+  nama_ibu_kandung       String
+  kawilId                String @db.ObjectId
+  kawil                  Kawil @relation("KawilToWarga", fields: [kawilId], references: [id])
+  dataTambahan           DataTambahan?
+}
+
+model DataTambahan {
+  id                     String @id @default(auto()) @map("_id") @db.ObjectId
+  jenis_bantuan          String
+  jenis_usulan           String
+  anak_yatim             String
+  kendaraan              String
+  jamban                 String
+  status_rumah           String
+  ternak                 String
+  bpjs                   String
+  TKI                    String
+  umkm                   String
+  sarana_umum            String
+  prasarana              String
+  warga                  DataWarga @relation(fields: [wargaId], references: [id])
+  wargaId                String @unique @db.ObjectId
+}

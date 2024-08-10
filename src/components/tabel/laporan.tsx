@@ -4,6 +4,7 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr"; // Import Next and 
 import Tabel from "@/components/subcomponents/tabel";
 
 type DataItem = {
+  id: number;
   nama: string;
   nik_kk: string;
   nik: string;

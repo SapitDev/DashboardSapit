@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 type DataItem = {
+  id: number;
   nama: string;
   nik_kk: string;
   nik: string;
@@ -130,7 +131,7 @@ const Tabel: React.FC<TabelProps> = ({ data, currentPage, itemsPerPage }) => {
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   <Link
-                    href={`#`}
+                    href={`detail/${entry.id}`}
                     className="text-information-600 underline hover:text-primary-600"
                   >
                     Detail

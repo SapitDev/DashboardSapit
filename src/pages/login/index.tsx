@@ -1,4 +1,3 @@
-// pages/login.tsx
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -12,9 +11,26 @@ const Login = () => {
   const Auth = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log("Authenticating", { username, password });
-      // Navigate to the desired route after successful login
-      router.push("/");
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      const { token } = await response.json();
+
+      localStorage.setItem("token", token);
+
+      router.push("/beranda");
     } catch (error) {
       setMsg("Authentication failed");
       console.error("Error during authentication:", error);

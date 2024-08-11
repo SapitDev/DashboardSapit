@@ -6,7 +6,7 @@ import DashboardLayout from "@/layout/layout";
 
 export default function Beranda() {
   return (
-    <>
+    <DashboardLayout>
       <div className="flex justify-between items-center mb-4">
         <div>
           <h1 className="text-2xl font-bold mt-4 mb-2">
@@ -25,6 +25,6 @@ export default function Beranda() {
         </Link>
       </div>
       <Laporan />
-    </>
+    </DashboardLayout>
   );
 }

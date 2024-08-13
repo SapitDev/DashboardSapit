@@ -1,15 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 interface LoginResponse {
   message?: string;
   error?: string;
-  user?: {
-    id: string;
-    nama: string;
-    email: string;
-  };
+  token?: string;
 }
 
 // Initialize Prisma Client
@@ -38,9 +35,16 @@ export default async function handler(
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
+      // Generate JWT
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET || "your_secret_key", // Use a secure key
+        { expiresIn: "1h" }
+      );
+
       res.status(200).json({
         message: "Login successful",
-        user: { id: user.id, nama: user.nama, email: user.email },
+        token,
       });
     } catch (error) {
       console.error("Error logging in:", error);

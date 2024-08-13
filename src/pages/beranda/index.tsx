@@ -1,10 +1,17 @@
-import React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Laporan from "@/components/tabel/laporan";
 import { MdAddBox } from "react-icons/md";
 import Link from "next/link";
 import DashboardLayout from "@/layout/layout";
+import AuthHelper from "@/utils/authHelper";
 
 export default function Beranda() {
+  const router = useRouter();
+
+  useEffect(() => {
+    AuthHelper.checkAuth(router);
+  }, [router]);
   return (
     <DashboardLayout>
       <div className="flex justify-between items-center mb-4">

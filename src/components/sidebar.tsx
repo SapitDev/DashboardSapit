@@ -7,6 +7,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { CgLogOut } from "react-icons/cg";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import AuthHelper from "@/utils/authHelper";
 
 interface SidebarProps {
   open: boolean;
@@ -19,7 +20,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
   const Menus = [
     {
       title: "Dashboard",
-      path: "/",
+      path: "/beranda",
       icon: <MdSpaceDashboard />,
       spacing: false,
     },
@@ -37,9 +38,23 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
     },
   ];
 
-  const handleLogout = () => {
-    console.log("Logging out...");
-    router.push("#");
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        AuthHelper.logout(router);
+      } else {
+        console.error("Failed to logout");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (

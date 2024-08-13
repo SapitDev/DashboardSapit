@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 type DataItem = {
+  id: number;
   nama: string;
   nik_kk: string;
   nik: string;
@@ -60,9 +61,7 @@ const Tabel: React.FC<TabelProps> = ({ data, currentPage, itemsPerPage }) => {
               <th className="px-4 py-2 bg-primary-600 text-white">
                 Tanggal Lahir
               </th>
-              <th className="px-4 py-2 bg-primary-600 text-white">
-                Pendidikan Terakhir
-              </th>
+
               <th className="px-4 py-2 bg-primary-600 text-white">Pekerjaan</th>
               <th className="px-4 py-2 bg-primary-600 text-white">
                 Alamat Lengkap
@@ -71,9 +70,7 @@ const Tabel: React.FC<TabelProps> = ({ data, currentPage, itemsPerPage }) => {
                 Kedudukan dalam Keluarga
               </th>
               <th className="px-4 py-2 bg-primary-600 text-white">Umur</th>
-              <th className="px-4 py-2 bg-primary-600 text-white ">
-                Nama Ibu Kandung
-              </th>
+
               <th className="px-4 py-2 bg-primary-600 text-white rounded-tr-lg">
                 Data Lengkap
               </th>
@@ -110,9 +107,7 @@ const Tabel: React.FC<TabelProps> = ({ data, currentPage, itemsPerPage }) => {
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   {entry.tanggal_lahir}
                 </td>
-                <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.pendidikan_terakhir}
-                </td>
+
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   {entry.pekerjaan}
                 </td>
@@ -125,12 +120,10 @@ const Tabel: React.FC<TabelProps> = ({ data, currentPage, itemsPerPage }) => {
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   {calculateAge(entry.tanggal_lahir)}
                 </td>
-                <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.nama_ibu_kandung}
-                </td>
+
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   <Link
-                    href={`#`}
+                    href={`detail/${entry.id}`}
                     className="text-information-600 underline hover:text-primary-600"
                   >
                     Detail

@@ -4,6 +4,7 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr"; // Import Next and 
 import Tabel from "@/components/subcomponents/tabel";
 
 type DataItem = {
+  id: number;
   nama: string;
   nik_kk: string;
   nik: string;
@@ -21,7 +22,7 @@ type DataItem = {
 export default function Laporan() {
   const [data, setData] = useState<DataItem[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 9;
+  const itemsPerPage = 8;
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search");

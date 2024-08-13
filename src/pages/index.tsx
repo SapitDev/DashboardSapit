@@ -1,10 +1,8 @@
-import DashboardLayout from "@/layout/layout";
-import Beranda from "@/pages/beranda/index";
-
+import Login from "./login";
 export default function Home() {
   return (
-    <DashboardLayout>
-      <Beranda />
-    </DashboardLayout>
+    <>
+      <Login />
+    </>
   );
 }

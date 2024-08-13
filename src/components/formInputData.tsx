@@ -506,6 +506,7 @@ export default function FormInputData() {
           >
             {showSecondForm ? "Submit" : "Next"}
           </button>
+
         </div>
       </form>
     </div>

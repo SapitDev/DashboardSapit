@@ -1,0 +1,30 @@
+[
+  {
+    "nama": "Budi Santoso",
+    "email": "budi.santoso@example.com",
+    "password": "$2b$10$CfBmrQ6Wj1YKMquH/8o9EeFz5O3jzUl5X9Nk3ljV1ZzZzpPiD7Jhe",
+    "dusun": "Dusun A",
+    "warga": []
+  },
+  {
+    "nama": "Sri Hartati",
+    "email": "sri.hartati@example.com",
+    "password": "$2b$10$fE5R1h8M4a3n8E5y0Nf/Se7X/VR3k7mVnL9GJjO1K1Wx4Jj4Q3S0u",
+    "dusun": "Dusun B",
+    "warga": []
+  },
+  {
+    "nama": "Agus Priyanto",
+    "email": "agus.priyanto@example.com",
+    "password": "$2b$10$7k5tBfV4uK8jHqP4xO6j2eR4xQ9tR8cQ8nJ0kL1N2P3mZ2R9X7Q8s",
+    "dusun": "Dusun C",
+    "warga": []
+  },
+  {
+    "nama": "Dewi Kusuma",
+    "email": "dewi.kusuma@example.com",
+    "password": "$2b$10$V9c3J5nF1q2t8B5lO6g2sQ7yL8mN1oJ0pP2tS3vU4rY9zX0wW5rV",
+    "dusun": "Dusun D",
+    "warga": []
+  }
+]

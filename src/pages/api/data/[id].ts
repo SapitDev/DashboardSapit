@@ -24,7 +24,7 @@ export default async function handler(
 
       const dataTambahan = await db
         .collection("DataTambahan")
-        .findOne({ wargaId: id });
+        .findOne({ wargaId: dataWarga.nik });
 
       res.status(200).json({ ...dataWarga, dataTambahan });
     } catch (error) {

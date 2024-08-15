@@ -2,29 +2,29 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 type DataItem = {
-  id: number;
+  _id: string;
   nama: string;
-  nik_kk: string;
+  nikKk: string;
   nik: string;
-  jenis_kelamin: string;
-  status_perkawinan: string;
-  tempat_lahir: string;
-  tanggal_lahir: string;
-  pendidikan_terakhir: string;
+  jenisKelamin: string;
+  statusPerkawinan: string;
+  tempatLahir: string;
+  tanggalLahir: string;
+  pendidikanTerakhir: string;
   pekerjaan: string;
-  alamat_lengkap: string;
-  kedudukan_dalam_keluarga: string;
-  nama_ibu_kandung: string;
-  jenis_bantuan?: {
-    anak_yatim?: string;
+  alamatLengkap: string;
+  kedudukanDalamKeluarga: string;
+  namaIbuKandung: string;
+  dataTambahan?: {
+    anakYatim?: string;
     kendaraan?: string;
     jamban?: string;
-    status_rumah?: string;
+    statusRumah?: string;
     ternak?: string;
     bpjs?: string;
     tki?: string;
     umkm?: string;
-    sarana_umum?: string;
+    saranaUmum?: string;
     prasarana?: string;
   };
 };
@@ -47,8 +47,6 @@ const DetailPage: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(data);
-
   return (
     <div className="max-w-8xl mx-auto mt-10 p-5 shadow-lg rounded-lg bg-white">
       <h2 className="text-2xl font-bold text-primary-500 mb-2">{data.nama}</h2>
@@ -66,18 +64,18 @@ const DetailPage: React.FC = () => {
             <span className="w-60">NIK</span>: {data.nik}
           </div>
           <div className="flex">
-            <span className="w-60">Jenis Kelamin</span>: {data.jenis_kelamin}
+            <span className="w-60">Jenis Kelamin</span>: {data.jenisKelamin}
           </div>
           <div className="flex">
-            <span className="w-60">Tempat Lahir</span>: {data.tempat_lahir}
+            <span className="w-60">Tempat Lahir</span>: {data.tempatLahir}
           </div>
           <div className="flex">
-            <span className="w-60">Tanggal Lahir</span>: {data.tanggal_lahir}{" "}
-            (Umur: {calculateAge(data.tanggal_lahir)} tahun)
+            <span className="w-60">Tanggal Lahir</span>: {data.tanggalLahir}{" "}
+            (Umur: {calculateAge(data.tanggalLahir)} tahun)
           </div>
           <div className="flex">
             <span className="w-60">Nama Ibu Kandung</span>:{" "}
-            {data.nama_ibu_kandung}
+            {data.namaIbuKandung}
           </div>
         </div>
       </div>
@@ -90,11 +88,11 @@ const DetailPage: React.FC = () => {
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
           <div className="flex">
             <span className="w-60">Status Perkawinan</span>:{" "}
-            {data.status_perkawinan}
+            {data.statusPerkawinan}
           </div>
           <div className="flex">
             <span className="w-60">Kedudukan dalam Keluarga</span>:{" "}
-            {data.kedudukan_dalam_keluarga}
+            {data.kedudukanDalamKeluarga}
           </div>
         </div>
       </div>
@@ -107,7 +105,7 @@ const DetailPage: React.FC = () => {
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
           <div className="flex">
             <span className="w-60">Pendidikan Terakhir</span>:{" "}
-            {data.pendidikan_terakhir}
+            {data.pendidikanTerakhir}
           </div>
           <div className="flex">
             <span className="w-60">Pekerjaan</span>: {data.pekerjaan}
@@ -122,10 +120,10 @@ const DetailPage: React.FC = () => {
         </h2>
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
           <div className="flex">
-            <span className="w-60">Nomor KK</span>: {data.nik_kk}
+            <span className="w-60">Nomor KK</span>: {data.nikKk}
           </div>
           <div className="flex">
-            <span className="w-60">Alamat Lengkap</span>: {data.alamat_lengkap}
+            <span className="w-60">Alamat Lengkap</span>: {data.alamatLengkap}
           </div>
         </div>
       </div>
@@ -138,43 +136,43 @@ const DetailPage: React.FC = () => {
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
           <div className="flex">
             <span className="w-60">Anak Yatim</span>:{" "}
-            {data.jenis_bantuan?.anak_yatim || "Tidak Ada"}
+            {data.dataTambahan?.anakYatim || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">Kendaraan</span>:{" "}
-            {data.jenis_bantuan?.kendaraan || "Tidak Ada"}
+            {data.dataTambahan?.kendaraan || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">Jamban</span>:{" "}
-            {data.jenis_bantuan?.jamban || "Tidak Ada"}
+            {data.dataTambahan?.jamban || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">Status Rumah</span>:{" "}
-            {data.jenis_bantuan?.status_rumah || "Tidak Ada"}
+            {data.dataTambahan?.statusRumah || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">Ternak</span>:{" "}
-            {data.jenis_bantuan?.ternak || "Tidak Ada"}
+            {data.dataTambahan?.ternak || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">BPJS</span>:{" "}
-            {data.jenis_bantuan?.bpjs || "Tidak Ada"}
+            {data.dataTambahan?.bpjs || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">TKI</span>:{" "}
-            {data.jenis_bantuan?.tki || "Tidak Ada"}
+            {data.dataTambahan?.tki || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">UMKM</span>:{" "}
-            {data.jenis_bantuan?.umkm || "Tidak Ada"}
+            {data.dataTambahan?.umkm || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">Sarana Umum</span>:{" "}
-            {data.jenis_bantuan?.sarana_umum || "Tidak Ada"}
+            {data.dataTambahan?.saranaUmum || "Tidak Ada"}
           </div>
           <div className="flex">
             <span className="w-60">Prasarana</span>:{" "}
-            {data.jenis_bantuan?.prasarana || "Tidak Ada"}
+            {data.dataTambahan?.prasarana || "Tidak Ada"}
           </div>
         </div>
       </div>
@@ -191,15 +189,16 @@ const DetailPage: React.FC = () => {
 
 export default DetailPage;
 
-function calculateAge(birthdate: string): number {
-  const birthDate = new Date(birthdate);
+function calculateAge(birthdate: string) {
   const today = new Date();
-  const age = today.getFullYear() - birthDate.getFullYear();
+  const birthDate = new Date(birthdate);
+  let age = today.getFullYear() - birthDate.getFullYear();
   const monthDifference = today.getMonth() - birthDate.getMonth();
-  const dayDifference = today.getDate() - birthDate.getDate();
-
-  if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
-    return age - 1;
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
   }
   return age;
 }

@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr"; // Import Next and Previous icons
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Tabel from "@/components/subcomponents/tabel";
 
 type DataItem = {
-  id: number;
+  _id: string;
   nama: string;
-  nik_kk: string;
+  nikKk: string;
   nik: string;
-  jenis_kelamin: string;
-  status_perkawinan: string;
-  tempat_lahir: string;
-  tanggal_lahir: string;
-  pendidikan_terakhir: string;
+  jenisKelamin: string;
+  statusPerkawinan: string;
+  tempatLahir: string;
+  tanggalLahir: string;
+  pendidikanTerakhir: string;
   pekerjaan: string;
-  alamat_lengkap: string;
-  kedudukan_dalam_keluarga: string;
-  nama_ibu_kandung: string;
+  alamatLengkap: string;
+  kedudukanDalamKeluarga: string;
+  namaIbuKandung: string;
 };
 
 export default function Laporan() {
@@ -25,17 +25,15 @@ export default function Laporan() {
   const itemsPerPage = 8;
   const searchParams = useSearchParams();
 
-  const search = searchParams.get("search");
   const [keyword, setKeyword] = useState(
     () => searchParams.get("keyword") || ""
   );
 
   useEffect(() => {
-    fetch(
-      "https://66aae6c8636a4840d7c8cd3b.mockapi.io/data-warga/datawargadusun"
-    )
+    fetch("/api/data")
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const onKeywordChangeHandler = (newKeyword: string) => {

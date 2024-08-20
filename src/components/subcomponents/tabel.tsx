@@ -2,19 +2,19 @@ import Link from "next/link";
 import React from "react";
 
 type DataItem = {
-  id: number;
+  _id: string;
   nama: string;
-  nik_kk: string;
+  nikKk: string;
   nik: string;
-  jenis_kelamin: string;
-  status_perkawinan: string;
-  tempat_lahir: string;
-  tanggal_lahir: string;
-  pendidikan_terakhir: string;
+  jenisKelamin: string;
+  statusPerkawinan: string;
+  tempatLahir: string;
+  tanggalLahir: string;
+  pendidikanTerakhir: string;
   pekerjaan: string;
-  alamat_lengkap: string;
-  kedudukan_dalam_keluarga: string;
-  nama_ibu_kandung: string;
+  alamatLengkap: string;
+  kedudukanDalamKeluarga: string;
+  namaIbuKandung: string;
 };
 
 type TabelProps = {
@@ -90,40 +90,40 @@ const Tabel: React.FC<TabelProps> = ({ data, currentPage, itemsPerPage }) => {
                   {entry.nama}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.nik_kk}
+                  {entry.nikKk}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   {entry.nik}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.jenis_kelamin}
+                  {entry.jenisKelamin}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.status_perkawinan}
+                  {entry.statusPerkawinan}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.tempat_lahir}
+                  {entry.tempatLahir}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.tanggal_lahir}
+                  {entry.tanggalLahir}
                 </td>
 
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   {entry.pekerjaan}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.alamat_lengkap}
+                  {entry.alamatLengkap}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {entry.kedudukan_dalam_keluarga}
+                  {entry.kedudukanDalamKeluarga}
                 </td>
                 <td className="border border-primary-600 px-4 py-2 text-center">
-                  {calculateAge(entry.tanggal_lahir)}
+                  {calculateAge(entry.tanggalLahir)}
                 </td>
 
                 <td className="border border-primary-600 px-4 py-2 text-center">
                   <Link
-                    href={`detail/${entry.id}`}
+                    href={`detail/${entry._id}`}
                     className="text-information-600 underline hover:text-primary-600"
                   >
                     Detail

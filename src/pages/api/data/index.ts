@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../../lib/mongodb";
+import { jwtDecode } from "jwt-decode";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,10 +11,31 @@ export default async function handler(
       const client = await clientPromise;
       const db = client.db("SapitDB");
 
-      const dataWarga = await db.collection("DataWarga").find({}).toArray();
+      const token = req.headers.authorization?.split(" ")[1];
+      if (!token) {
+        return res.status(401).json({ error: "Token not provided" });
+      }
+
+      interface DecodedToken {
+        id: string;
+      }
+
+      const decodedToken: DecodedToken = jwtDecode(token);
+
+      const kawilId = decodedToken.id;
+
+      if (!kawilId) {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+
+      const dataWarga = await db
+        .collection("DataWarga")
+        .find({ kawilId })
+        .toArray();
 
       res.status(200).json(dataWarga);
     } catch (error) {
+      console.error("Error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   } else {

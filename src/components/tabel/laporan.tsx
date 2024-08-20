@@ -30,7 +30,13 @@ export default function Laporan() {
   );
 
   useEffect(() => {
-    fetch("/api/data")
+    const token = localStorage.getItem("token");
+
+    fetch("/api/data", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data:", error));

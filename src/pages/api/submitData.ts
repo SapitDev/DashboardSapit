@@ -10,10 +10,15 @@ export default async function handler(
       const client = await clientPromise;
       const db = client.db("SapitDB");
 
-      const { formDataUtama, formDataTambahan } = req.body;
+      const { kawilId, formDataUtama, formDataTambahan } = req.body;
 
       if (!formDataUtama || !formDataTambahan) {
         res.status(400).json({ error: "Missing form data" });
+        return;
+      }
+
+      if (!kawilId) {
+        res.status(400).json({ error: "Missing Kawil ID" });
         return;
       }
 
@@ -26,13 +31,17 @@ export default async function handler(
 
       await db
         .collection("DataWarga")
-        .updateOne({ nik }, { $set: formDataUtama }, { upsert: true });
+        .updateOne(
+          { nik },
+          { $set: { ...formDataUtama, kawilId } },
+          { upsert: true }
+        );
 
       await db
         .collection("DataTambahan")
         .updateOne(
           { wargaId: nik },
-          { $set: { ...formDataTambahan, wargaId: nik } },
+          { $set: { ...formDataTambahan, wargaId: nik, kawilId } },
           { upsert: true }
         );
 

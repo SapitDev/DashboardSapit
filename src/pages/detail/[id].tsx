@@ -30,8 +30,8 @@ type DataItem = {
     bpjs: string;
     tki: string;
     umkm: string;
-    saranaUmum: string;
-    prasarana: string;
+    jandaDuda: string;
+    ibuHamil: string;
   };
 };
 

@@ -54,7 +54,7 @@ const FormData: React.FC<FormDataProps> = ({
           htmlFor="nikKk"
           className="block mb-2 text-sm font-medium text-gray-900"
         >
-          NIK KK
+          NO. KK
         </label>
         <input
           type="text"
@@ -117,6 +117,7 @@ const FormData: React.FC<FormDataProps> = ({
           <option value="Kawin">Kawin</option>
           <option value="Cerai Hidup">Cerai Hidup</option>
           <option value="Cerai Mati">Cerai Mati</option>
+          <option value="Belum Tercatat">Belum Tercatat</option>
         </select>
       </div>
       <div>
@@ -157,14 +158,22 @@ const FormData: React.FC<FormDataProps> = ({
         >
           Pendidikan Terakhir
         </label>
-        <input
-          type="text"
+        <select
           id="pendidikanTerakhir"
           value={formData.pendidikanTerakhir}
           onChange={(e) => handleInputChange(e, formSetter)}
           className="bg-gray-50 border border-primary-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="Pendidikan Terakhir"
-        />
+        >
+          <option value="">Pilih</option>
+          <option value="Belum Sekolah">Tidak/Belum Sekolah</option>
+          <option value="Belum Tamat SD">Belum Tamat SD/Sederajat</option>
+          <option value="Tamat SD">Tamat SD/Sederajat</option>
+          <option value="Belum Tamat SMP">Belum Tamat SLTP/SMP</option>
+          <option value="Tamat SMP">Tamat SLTP/SMP</option>
+          <option value="Belum Tamat SMA">Belum Tamat SLTA/SMA</option>
+          <option value="Tamat SMA">Tamat SLTA/SMA</option>
+          <option value="Sarjana">Diploma IV/Strata I</option>
+        </select>
       </div>
       <div>
         <label
@@ -189,13 +198,13 @@ const FormData: React.FC<FormDataProps> = ({
         >
           Alamat Lengkap
         </label>
-        <textarea
+        <input
           id="alamatLengkap"
           value={formData.alamatLengkap}
           onChange={(e) => handleInputChange(e, formSetter)}
           className="bg-gray-50 border border-primary-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Alamat Lengkap"
-        ></textarea>
+        ></input>
       </div>
       <div>
         <label

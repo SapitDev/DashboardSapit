@@ -26,7 +26,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
     },
     {
       title: "Rincian",
-      path: "#",
+      path: "/rincian",
       icon: <FaReadme />,
       spacing: true,
     },

@@ -10,8 +10,8 @@ type DataTambahan = {
   bpjs?: string;
   tki?: string;
   umkm?: string;
-  saranaUmum?: string;
-  prasarana?: string;
+  jandaDuda?: string;
+  ibuHamil?: string;
 };
 
 type LainLainEditFormProps = {
@@ -204,45 +204,45 @@ const LainLainEditForm: React.FC<LainLainEditFormProps> = ({
           />
         </div>
         <div className="flex items-center">
-          <span className="w-60">Sarana Umum</span>:{" "}
-          {editMode.saranaUmum ? (
+          <span className="w-60">Janda/Duda</span>:{" "}
+          {editMode.jandaDuda ? (
             <input
               type="text"
-              value={dataTambahan?.saranaUmum || ""}
+              value={dataTambahan?.jandaDuda || ""}
               onChange={(e) =>
-                handleChange("dataTambahan.saranaUmum", e.target.value)
+                handleChange("dataTambahan.jandaDuda", e.target.value)
               }
               className="ml-2 border border-primary-200 rounded px-2 py-1"
             />
           ) : (
             <span className="ml-2">
-              {dataTambahan?.saranaUmum || "Tidak Ada"}
+              {dataTambahan?.jandaDuda || "Tidak Ada"}
             </span>
           )}
           <FaEdit
             className="ml-2 text-primary-600 cursor-pointer"
-            onClick={() => handleEditToggle("saranaUmum")}
+            onClick={() => handleEditToggle("jandaDuda")}
           />
         </div>
         <div className="flex items-center">
-          <span className="w-60">Prasarana</span>:{" "}
-          {editMode.prasarana ? (
+          <span className="w-60">Ibu Hamil</span>:{" "}
+          {editMode.ibuHamil ? (
             <input
               type="text"
-              value={dataTambahan?.prasarana || ""}
+              value={dataTambahan?.ibuHamil || ""}
               onChange={(e) =>
-                handleChange("dataTambahan.prasarana", e.target.value)
+                handleChange("dataTambahan.ibuHamil", e.target.value)
               }
               className="ml-2 border border-primary-200 rounded px-2 py-1"
             />
           ) : (
             <span className="ml-2">
-              {dataTambahan?.prasarana || "Tidak Ada"}
+              {dataTambahan?.ibuHamil || "Tidak Ada"}
             </span>
           )}
           <FaEdit
             className="ml-2 text-primary-600 cursor-pointer"
-            onClick={() => handleEditToggle("prasarana")}
+            onClick={() => handleEditToggle("ibuHamil")}
           />
         </div>
       </div>

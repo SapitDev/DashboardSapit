@@ -32,6 +32,8 @@ type DataItem = {
     umkm: string;
     jandaDuda: string;
     ibuHamil: string;
+    jenisBantuan: string;
+    jenisUsulan: string;
   };
 };
 

@@ -33,7 +33,23 @@ export default async function handler(
         .find({ kawilId })
         .toArray();
 
-      res.status(200).json(dataWarga);
+      const nikList = dataWarga.map((warga) => warga.nik);
+      const dataTambahan = await db
+        .collection("DataTambahan")
+        .find({ wargaId: { $in: nikList } })
+        .toArray();
+
+      const combinedData = dataWarga.map((warga) => {
+        const tambahan = dataTambahan.find(
+          (item) => item.wargaId === warga.nik
+        );
+        return {
+          ...warga,
+          dataTambahan: tambahan || {},
+        };
+      });
+
+      res.status(200).json(combinedData);
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal Server Error" });

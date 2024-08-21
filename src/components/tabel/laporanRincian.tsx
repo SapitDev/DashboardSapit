@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import Tabel from "@/components/subcomponents/tabel";
+import KepalaKeluarga from "@/components/subcomponents/dataFilter/kepalakeluarga";
+import JumlahJiwa from "@/components/subcomponents/dataFilter/jumlahjiwa";
+import Pekerjaan from "../subcomponents/dataFilter/pekerjaan";
+import Bantuan from "../subcomponents/dataFilter/jenisbantuan";
+import Pendidikan from "../subcomponents/dataFilter/pendidikan";
+import JandaDuda from "../subcomponents/dataFilter/jandaduda";
+import AnakYatim from "../subcomponents/dataFilter/anayatim";
+import Umur from "../subcomponents/dataFilter/umur";
+import Kendaraan from "../subcomponents/dataFilter/kendaraan";
+import Jamban from "../subcomponents/dataFilter/jamban";
 
 type DataItem = {
   _id: string;
@@ -17,6 +24,20 @@ type DataItem = {
   alamatLengkap: string;
   kedudukanDalamKeluarga: string;
   namaIbuKandung: string;
+  dataTambahan: {
+    anakYatim: string;
+    kendaraan: string;
+    jamban: string;
+    statusRumah: string;
+    ternak: string;
+    bpjs: string;
+    tki: string;
+    umkm: string;
+    jandaDuda: string;
+    ibuHamil: string;
+    jenisBantuan: string;
+    jenisUsulan: string;
+  };
 };
 
 export default function LaporanRincian() {
@@ -31,18 +52,24 @@ export default function LaporanRincian() {
       },
     })
       .then((res) => res.json())
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data);
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   return (
     <div className="font-primary">
-      {/* Kategori: Informasi Pribadi */}
-      <div className="bg-white border border-primary-200 shadow rounded-lg p-5 mb-2">
-        <h2 className="text-lg font-semibold shadow-lg rounded-lg bg-gradient-to-r from-primary-500 to-primary-100 text-white p-3 mb-2">
-          Informasi Pribadi
-        </h2>
-      </div>
+      <KepalaKeluarga data={data} />
+      <JumlahJiwa data={data} />
+      <Pekerjaan data={data} />
+      <Bantuan data={data} />
+      <Pendidikan data={data} />
+      <JandaDuda data={data} />
+      <AnakYatim data={data} />
+      <Umur data={data} />
+      <Kendaraan data={data} />
+      <Jamban data={data} />
     </div>
   );
 }

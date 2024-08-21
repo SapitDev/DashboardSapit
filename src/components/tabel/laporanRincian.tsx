@@ -9,6 +9,11 @@ import AnakYatim from "../subcomponents/dataFilter/anayatim";
 import Umur from "../subcomponents/dataFilter/umur";
 import Kendaraan from "../subcomponents/dataFilter/kendaraan";
 import Jamban from "../subcomponents/dataFilter/jamban";
+import StatusRumah from "../subcomponents/dataFilter/situsrumah";
+import Ternak from "../subcomponents/dataFilter/ternak";
+import BPJS from "../subcomponents/dataFilter/bpjs";
+import TKI from "../subcomponents/dataFilter/tki";
+import UMKM from "../subcomponents/dataFilter/umkm";
 
 type DataItem = {
   _id: string;
@@ -70,6 +75,11 @@ export default function LaporanRincian() {
       <Umur data={data} />
       <Kendaraan data={data} />
       <Jamban data={data} />
+      <StatusRumah data={data} />
+      <Ternak data={data} />
+      <BPJS data={data} />
+      <TKI data={data} />
+      <UMKM data={data} />
     </div>
   );
 }

@@ -31,8 +31,8 @@ export default function InputData() {
     bpjs: "",
     tki: "",
     umkm: "",
-    saranaUmum: "",
-    prasarana: "",
+    ibuHamil: "",
+    jandaDuda: "",
   });
 
   const [currentForm, setCurrentForm] = useState(1);
@@ -52,6 +52,10 @@ export default function InputData() {
 
   const handleNextForm = () => {
     setCurrentForm(2);
+  };
+
+  const handlePrevForm = () => {
+    setCurrentForm(1);
   };
 
   const handleSubmit = async () => {
@@ -103,6 +107,7 @@ export default function InputData() {
           formData={formDataTambahan}
           handleInputChange={handleInputChange}
           formSetter={setFormDataTambahan}
+          onPrev={handlePrevForm}
           onSubmit={handleSubmit}
         />
       )}

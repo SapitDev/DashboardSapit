@@ -16,8 +16,8 @@ model DataTambahan {
   jenisUsulan  String
   kawilId      String
   kendaraan    String
-  prasarana    String
-  saranaUmum   String
+  ibuHamil    String
+  jandaDuda   String
   statusRumah  String
   ternak       String
   tki          String

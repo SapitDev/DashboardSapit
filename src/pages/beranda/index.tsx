@@ -1,37 +1,19 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Laporan from "@/components/tabel/laporan";
 import { MdAddBox } from "react-icons/md";
 import Link from "next/link";
 import DashboardLayout from "@/layout/layout";
 import AuthHelper from "@/utils/authHelper";
+import Laporan from "@/components/tabel/laporan";
 
 export default function Beranda() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchType, setSearchType] = useState("nama");
 
   useEffect(() => {
     AuthHelper.checkAuth(router);
   }, [router]);
-
-  // Fetch data dari API berdasarkan searchQuery
-  useEffect(() => {
-    const fetchData = async () => {
-      if (searchQuery.length > 0) {
-        try {
-          const response = await fetch(
-            `/api/search?query=${encodeURIComponent(searchQuery)}`
-          );
-          const data = await response.json();
-          setSearchResults(data);
-        } catch (error) {
-          console.error("Error fetching search results:", error);
-        }
-      }
-    };
-    fetchData();
-  }, [searchQuery]);
 
   return (
     <DashboardLayout>
@@ -44,11 +26,23 @@ export default function Beranda() {
             Seluruh data warga Dusun Batu Cangku Utara
           </h2>
 
+          {/* Pilihan tipe pencarian */}
+          <select
+            className="border p-2 rounded-md mb-2 w-full"
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          >
+            <option value="nama">Cari berdasarkan Nama</option>
+            <option value="nik">Cari berdasarkan NIK</option>
+          </select>
+
           {/* Input Search */}
           <input
             type="text"
             className="border p-2 rounded-md w-full"
-            placeholder="Cari nama warga..."
+            placeholder={`Cari ${
+              searchType === "nama" ? "nama warga" : "NIK warga"
+            }...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -63,18 +57,7 @@ export default function Beranda() {
       </div>
 
       {/* Display search results */}
-      {searchResults.length > 0 ? (
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Hasil Pencarian:</h2>
-          <ul className="list-disc pl-5">
-            {searchResults.map((result, index) => (
-              <li key={index}>{result.name}</li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <Laporan />
-      )}
+      <Laporan searchQuery={searchQuery} searchType={searchType} />
     </DashboardLayout>
   );
 }

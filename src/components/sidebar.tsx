@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { TbReportAnalytics } from "react-icons/tb";
 import { FaReadme } from "react-icons/fa6";
 import { GoHomeFill } from "react-icons/go";
 import { IoMdArrowDropleft } from "react-icons/io";
@@ -29,12 +28,6 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
       path: "/rincian",
       icon: <FaReadme />,
       spacing: true,
-    },
-    {
-      title: "Print",
-      path: "#",
-      icon: <TbReportAnalytics />,
-      spacing: false,
     },
   ];
 

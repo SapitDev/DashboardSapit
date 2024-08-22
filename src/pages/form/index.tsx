@@ -2,6 +2,7 @@ import { useState } from "react";
 import FormDataUtama from "../../components/form/formDataUtama";
 import FormDataTambahan from "../../components/form/formDataTambahan";
 import DashboardLayout from "@/layout/layout";
+import { jwtDecode } from "jwt-decode";
 
 export default function InputData() {
   const [formDataUtama, setFormDataUtama] = useState({
@@ -30,8 +31,8 @@ export default function InputData() {
     bpjs: "",
     tki: "",
     umkm: "",
-    saranaUmum: "",
-    prasarana: "",
+    ibuHamil: "",
+    jandaDuda: "",
   });
 
   const [currentForm, setCurrentForm] = useState(1);
@@ -53,14 +54,28 @@ export default function InputData() {
     setCurrentForm(2);
   };
 
+  const handlePrevForm = () => {
+    setCurrentForm(1);
+  };
+
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/submitData", {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("Token not found");
+      }
+
+      const decodedToken: { id: string } = jwtDecode(token);
+      const kawilId = decodedToken?.id;
+
+      const response = await fetch("/api/submitData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          kawilId,
           formDataUtama,
           formDataTambahan,
         }),
@@ -92,6 +107,7 @@ export default function InputData() {
           formData={formDataTambahan}
           handleInputChange={handleInputChange}
           formSetter={setFormDataTambahan}
+          onPrev={handlePrevForm}
           onSubmit={handleSubmit}
         />
       )}

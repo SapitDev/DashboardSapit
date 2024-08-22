@@ -1,49 +1,115 @@
+import { FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import LainLainEditForm from "@/components/editForm/LainLainEditForm";
+
+const MySwal = withReactContent(Swal);
 
 type DataItem = {
-  id: number;
+  _id: string;
   nama: string;
-  nik_kk: string;
+  nikKk: string;
   nik: string;
-  jenis_kelamin: string;
-  status_perkawinan: string;
-  tempat_lahir: string;
-  tanggal_lahir: string;
-  pendidikan_terakhir: string;
+  jenisKelamin: string;
+  statusPerkawinan: string;
+  tempatLahir: string;
+  tanggalLahir: string;
+  pendidikanTerakhir: string;
   pekerjaan: string;
-  alamat_lengkap: string;
-  kedudukan_dalam_keluarga: string;
-  nama_ibu_kandung: string;
-  jenis_bantuan?: {
-    anak_yatim?: string;
-    kendaraan?: string;
-    jamban?: string;
-    status_rumah?: string;
-    ternak?: string;
-    bpjs?: string;
-    tki?: string;
-    umkm?: string;
-    sarana_umum?: string;
-    prasarana?: string;
+  alamatLengkap: string;
+  kedudukanDalamKeluarga: string;
+  namaIbuKandung: string;
+  dataTambahan: {
+    anakYatim: string;
+    kendaraan: string;
+    jamban: string;
+    statusRumah: string;
+    ternak: string;
+    bpjs: string;
+    tki: string;
+    umkm: string;
+    jandaDuda: string;
+    ibuHamil: string;
+    jenisBantuan: string;
+    jenisUsulan: string;
   };
 };
 
 const DetailPage: React.FC = () => {
   const [data, setData] = useState<DataItem | null>(null);
+  const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
     if (id) {
-      fetch(
-        `https://66aae6c8636a4840d7c8cd3b.mockapi.io/data-warga/datawargadusun/${id}`
-      )
+      fetch(`/api/data/${id}`)
         .then((res) => res.json())
         .then((data) => setData(data))
         .catch((error) => console.error("Error fetching data:", error));
     }
   }, [id]);
+
+  const handleEditToggle = (key: string) => {
+    setEditMode((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleChange = (key: string, value: string) => {
+    if (data) {
+      if (key.startsWith("dataTambahan.")) {
+        const subKey = key.split(".")[1];
+        setData({
+          ...data,
+          dataTambahan: {
+            ...data.dataTambahan,
+            [subKey]: value,
+          },
+        });
+      } else {
+        setData({ ...data, [key]: value });
+      }
+    }
+  };
+
+  const handleEdit = async () => {
+    if (!data) return;
+
+    try {
+      const response = await fetch(`/api/data/edit/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update data");
+      }
+
+      const updatedData = await response.json();
+      setData(updatedData);
+
+      MySwal.fire({
+        title: "Success",
+        text: "Data berhasil diperbarui!",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        router.push("/beranda");
+      });
+    } catch (error) {
+      console.error("Error updating data:", error);
+      MySwal.fire({
+        title: "Error",
+        text: "Gagal memperbarui data.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
 
   if (!data) {
     return <div>Loading...</div>;
@@ -63,25 +129,135 @@ const DetailPage: React.FC = () => {
           Informasi Pribadi
         </h2>
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
-          <div className="flex">
-            <span className="w-60">Nama</span>: {data.nama}
+          <div className="flex items-center mb-2">
+            <span className="w-60">Nama</span>:
+            {editMode.nama ? (
+              <input
+                type="text"
+                value={data.nama}
+                onChange={(e) => handleChange("nama", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.nama}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("nama")}
+            />
           </div>
-          <div className="flex">
-            <span className="w-60">NIK</span>: {data.nik}
+          {/* NIK KK */}
+          <div className="flex items-center mb-2">
+            <span className="w-60">NIK KK</span>:
+            {editMode.nikKk ? (
+              <input
+                type="text"
+                value={data.nikKk}
+                onChange={(e) => handleChange("nikKk", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.nikKk}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("nikKk")}
+            />
           </div>
-          <div className="flex">
-            <span className="w-60">Jenis Kelamin</span>: {data.jenis_kelamin}
+
+          {/* NIK */}
+          <div className="flex items-center mb-2">
+            <span className="w-60">NIK</span>:
+            {editMode.nik ? (
+              <input
+                type="text"
+                value={data.nik}
+                onChange={(e) => handleChange("nik", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.nik}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("nik")}
+            />
           </div>
-          <div className="flex">
-            <span className="w-60">Tempat Lahir</span>: {data.tempat_lahir}
+
+          {/* Jenis Kelamin */}
+          <div className="flex items-center mb-2">
+            <span className="w-60">Jenis Kelamin</span>:
+            {editMode.jenisKelamin ? (
+              <input
+                type="text"
+                value={data.jenisKelamin}
+                onChange={(e) => handleChange("jenisKelamin", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.jenisKelamin}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("jenisKelamin")}
+            />
           </div>
-          <div className="flex">
-            <span className="w-60">Tanggal Lahir</span>: {data.tanggal_lahir}{" "}
-            (Umur: {calculateAge(data.tanggal_lahir)} tahun)
+
+          {/* Tempat Lahir */}
+          <div className="flex items-center mb-2">
+            <span className="w-60">Tempat Lahir</span>:
+            {editMode.tempatLahir ? (
+              <input
+                type="text"
+                value={data.tempatLahir}
+                onChange={(e) => handleChange("tempatLahir", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.tempatLahir}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("tempatLahir")}
+            />
           </div>
-          <div className="flex">
-            <span className="w-60">Nama Ibu Kandung</span>:{" "}
-            {data.nama_ibu_kandung}
+
+          {/* Tanggal Lahir */}
+          <div className="flex items-center mb-2">
+            <span className="w-60">Tanggal Lahir</span>:
+            {editMode.tanggalLahir ? (
+              <input
+                type="date"
+                value={data.tanggalLahir}
+                onChange={(e) => handleChange("tanggalLahir", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.tanggalLahir}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("tanggalLahir")}
+            />
+          </div>
+
+          {/* Nama Ibu Kandung */}
+          <div className="flex items-center mb-2">
+            <span className="w-60">Nama Ibu Kandung</span>:
+            {editMode.namaIbuKandung ? (
+              <input
+                type="text"
+                value={data.namaIbuKandung}
+                onChange={(e) => handleChange("namaIbuKandung", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.namaIbuKandung}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("namaIbuKandung")}
+            />
           </div>
         </div>
       </div>
@@ -92,13 +268,43 @@ const DetailPage: React.FC = () => {
           Status
         </h2>
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
-          <div className="flex">
-            <span className="w-60">Status Perkawinan</span>:{" "}
-            {data.status_perkawinan}
+          <div className="flex items-center">
+            <span className="w-60">Status Perkawinan</span>:
+            {editMode.statusPerkawinan ? (
+              <input
+                type="text"
+                value={data.statusPerkawinan}
+                onChange={(e) =>
+                  handleChange("statusPerkawinan", e.target.value)
+                }
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.statusPerkawinan}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("statusPerkawinan")}
+            />
           </div>
-          <div className="flex">
-            <span className="w-60">Kedudukan dalam Keluarga</span>:{" "}
-            {data.kedudukan_dalam_keluarga}
+          <div className="flex items-center">
+            <span className="w-60">Kedudukan dalam Keluarga</span>:
+            {editMode.kedudukanDalamKeluarga ? (
+              <input
+                type="text"
+                value={data.kedudukanDalamKeluarga}
+                onChange={(e) =>
+                  handleChange("kedudukanDalamKeluarga", e.target.value)
+                }
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.kedudukanDalamKeluarga}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("kedudukanDalamKeluarga")}
+            />
           </div>
         </div>
       </div>
@@ -109,12 +315,41 @@ const DetailPage: React.FC = () => {
           Pendidikan dan Pekerjaan
         </h2>
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
-          <div className="flex">
-            <span className="w-60">Pendidikan Terakhir</span>:{" "}
-            {data.pendidikan_terakhir}
+          <div className="flex items-center">
+            <span className="w-60">Pendidikan Terakhir</span>:
+            {editMode.pendidikanTerakhir ? (
+              <input
+                type="text"
+                value={data.pendidikanTerakhir}
+                onChange={(e) =>
+                  handleChange("pendidikanTerakhir", e.target.value)
+                }
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.pendidikanTerakhir}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("pendidikanTerakhir")}
+            />
           </div>
-          <div className="flex">
-            <span className="w-60">Pekerjaan</span>: {data.pekerjaan}
+          <div className="flex items-center">
+            <span className="w-60">Pekerjaan</span>:
+            {editMode.pekerjaan ? (
+              <input
+                type="text"
+                value={data.pekerjaan}
+                onChange={(e) => handleChange("pekerjaan", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.pekerjaan}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("pekerjaan")}
+            />
           </div>
         </div>
       </div>
@@ -125,85 +360,66 @@ const DetailPage: React.FC = () => {
           Alamat
         </h2>
         <div className="space-y-2 text-gray-900 font-medium leading-loose">
-          <div className="flex">
-            <span className="w-60">Nomor KK</span>: {data.nik_kk}
-          </div>
-          <div className="flex">
-            <span className="w-60">Alamat Lengkap</span>: {data.alamat_lengkap}
-          </div>
-        </div>
-      </div>
-
-      {/* Kategori: Jenis Bantuan */}
-      <div className="bg-white border border-primary-200 shadow rounded-lg p-5 mb-2">
-        <h2 className="text-lg font-semibold shadow-lg rounded-lg bg-gradient-to-r from-primary-500 to-primary-100 text-white p-3 mb-2">
-          Jenis Bantuan
-        </h2>
-        <div className="space-y-2 text-gray-900 font-medium leading-loose">
-          <div className="flex">
-            <span className="w-60">Anak Yatim</span>:{" "}
-            {data.jenis_bantuan?.anak_yatim || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">Kendaraan</span>:{" "}
-            {data.jenis_bantuan?.kendaraan || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">Jamban</span>:{" "}
-            {data.jenis_bantuan?.jamban || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">Status Rumah</span>:{" "}
-            {data.jenis_bantuan?.status_rumah || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">Ternak</span>:{" "}
-            {data.jenis_bantuan?.ternak || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">BPJS</span>:{" "}
-            {data.jenis_bantuan?.bpjs || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">TKI</span>:{" "}
-            {data.jenis_bantuan?.tki || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">UMKM</span>:{" "}
-            {data.jenis_bantuan?.umkm || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">Sarana Umum</span>:{" "}
-            {data.jenis_bantuan?.sarana_umum || "Tidak Ada"}
-          </div>
-          <div className="flex">
-            <span className="w-60">Prasarana</span>:{" "}
-            {data.jenis_bantuan?.prasarana || "Tidak Ada"}
+          <div className="flex items-center">
+            <span className="w-60">Alamat Lengkap</span>:
+            {editMode.alamatLengkap ? (
+              <input
+                type="text"
+                value={data.alamatLengkap}
+                onChange={(e) => handleChange("alamatLengkap", e.target.value)}
+                className="ml-2 border border-primary-200 rounded px-2 py-1"
+              />
+            ) : (
+              <span className="ml-2">{data.alamatLengkap}</span>
+            )}
+            <FaEdit
+              className="ml-2 text-primary-600 cursor-pointer"
+              onClick={() => handleEditToggle("alamatLengkap")}
+            />
           </div>
         </div>
       </div>
 
-      <button
-        onClick={() => router.push("/")}
-        className="mt-4 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
-      >
-        Back to List
-      </button>
+      {/* Data Lain-Lain */}
+      {data.dataTambahan && (
+        <LainLainEditForm
+          dataTambahan={data.dataTambahan}
+          editMode={editMode}
+          handleEditToggle={handleEditToggle}
+          handleChange={handleChange}
+        />
+      )}
+
+      <div className="flex justify-between">
+        <button
+          onClick={() => router.push("/beranda")}
+          className="mt-4 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+        >
+          Back to List
+        </button>
+        <button
+          onClick={handleEdit}
+          className="mt-4 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+        >
+          Update Data
+        </button>
+      </div>
     </div>
   );
 };
 
 export default DetailPage;
 
-function calculateAge(birthdate: string): number {
-  const birthDate = new Date(birthdate);
+function calculateAge(birthdate: string) {
   const today = new Date();
-  const age = today.getFullYear() - birthDate.getFullYear();
+  const birthDate = new Date(birthdate);
+  let age = today.getFullYear() - birthDate.getFullYear();
   const monthDifference = today.getMonth() - birthDate.getMonth();
-  const dayDifference = today.getDate() - birthDate.getDate();
-
-  if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
-    return age - 1;
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
   }
   return age;
 }

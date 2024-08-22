@@ -7,48 +7,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Kawil {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  nama    String
-  email   String @unique
-  password String
-  dusun   String
-  warga   DataWarga[] @relation("KawilToWarga")
+model DataTambahan {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  anakYatim    String
+  bpjs         String
+  jamban       String
+  jenisBantuan String
+  jenisUsulan  String
+  kawilId      String
+  kendaraan    String
+  ibuHamil    String
+  jandaDuda   String
+  statusRumah  String
+  ternak       String
+  tki          String
+  umkm         String
+  wargaId      String @unique
 }
 
 model DataWarga {
   id                     String @id @default(auto()) @map("_id") @db.ObjectId
+  alamatLengkap          String
+  jenisKelamin           String
+  kawilId                String
+  kedudukanDalamKeluarga String
   nama                   String
-  nik_kk                 String
+  namaIbuKandung         String
   nik                    String @unique
-  jenis_kelamin          String
-  status_perkawinan      String
-  tempat_lahir           String
-  tanggal_lahir          String
-  pendidikan_terakhir    String
+  nikKk                  String
   pekerjaan              String
-  alamat_lengkap         String
-  kedudukan_dalam_keluarga String
-  nama_ibu_kandung       String
-  kawilId                String @db.ObjectId
-  kawil                  Kawil @relation("KawilToWarga", fields: [kawilId], references: [id])
-  dataTambahan           DataTambahan?
+  pendidikanTerakhir     String
+  statusPerkawinan       String
+  tanggalLahir           String
+  tempatLahir            String
 }
 
-model DataTambahan {
-  id                     String @id @default(auto()) @map("_id") @db.ObjectId
-  jenis_bantuan          String
-  jenis_usulan           String
-  anak_yatim             String
-  kendaraan              String
-  jamban                 String
-  status_rumah           String
-  ternak                 String
-  bpjs                   String
-  TKI                    String
-  umkm                   String
-  sarana_umum            String
-  prasarana              String
-  warga                  DataWarga @relation(fields: [wargaId], references: [id])
-  wargaId                String @unique @db.ObjectId
+model Kawil {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  dusun    String
+  email    String @unique
+  nama     String
+  password String
 }

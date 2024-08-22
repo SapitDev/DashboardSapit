@@ -9,7 +9,6 @@ interface LoginResponse {
   token?: string;
 }
 
-// Initialize Prisma Client
 const prismaClient = prisma;
 
 export default async function handler(
@@ -35,10 +34,9 @@ export default async function handler(
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
-      // Generate JWT
       const token = jwt.sign(
         { id: user.id, email: user.email },
-        process.env.JWT_SECRET || "your_secret_key", // Use a secure key
+        process.env.JWT_SECRET || "qbsaoqnsapcqwnnskcna",
         { expiresIn: "1h" }
       );
 

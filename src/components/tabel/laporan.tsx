@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Tabel from "@/components/subcomponents/tabel";
 
@@ -19,15 +18,15 @@ type DataItem = {
   namaIbuKandung: string;
 };
 
-export default function Laporan() {
+interface LaporanProps {
+  searchQuery: string;
+  searchType: string;
+}
+
+export default function Laporan({ searchQuery, searchType }: LaporanProps) {
   const [data, setData] = useState<DataItem[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 8;
-  const searchParams = useSearchParams();
-
-  const [keyword, setKeyword] = useState(
-    () => searchParams.get("keyword") || ""
-  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -42,14 +41,14 @@ export default function Laporan() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const onKeywordChangeHandler = (newKeyword: string) => {
-    setKeyword(newKeyword);
-    setCurrentPage(0);
-  };
-
-  const filteredData = data.filter((item) =>
-    item.nama.toLowerCase().includes(keyword.toLowerCase())
-  );
+  const filteredData = data.filter((item) => {
+    if (searchType === "nama") {
+      return item.nama.toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (searchType === "nik") {
+      return item.nik.includes(searchQuery);
+    }
+    return true;
+  });
 
   const startIndex = currentPage * itemsPerPage;
   const currentPageData = filteredData.slice(

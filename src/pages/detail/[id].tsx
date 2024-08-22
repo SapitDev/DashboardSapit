@@ -119,6 +119,10 @@ const DetailPage: React.FC = () => {
     <div className="max-w-8xl mx-auto mt-10 p-5 shadow-lg rounded-lg bg-white">
       <h2 className="text-2xl font-bold text-primary-500 mb-2">{data.nama}</h2>
 
+      <h2 className="text-lg font-semibold shadow-lg rounded-lg bg-gradient-to-r from-primary-500 to-primary-100 text-white p-3 mb-2">
+        Haloo admin sapit, selamat mengelola data warga
+      </h2>
+
       {/* Kategori: Informasi Pribadi */}
       <div className="bg-white border border-primary-200 shadow rounded-lg p-5 mb-2">
         <h2 className="text-lg font-semibold shadow-lg rounded-lg bg-gradient-to-r from-primary-500 to-primary-100 text-white p-3 mb-2">

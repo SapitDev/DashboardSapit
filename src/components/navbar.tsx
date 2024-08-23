@@ -12,10 +12,8 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { id: 1, text: "Tentang Desa", url: "/tentang-desa" },
-    { id: 2, text: "Data Warga", url: "/data-warga" },
     {
-      id: 3,
+      id: 1,
       text: "Login",
       url: "/login",
       className:

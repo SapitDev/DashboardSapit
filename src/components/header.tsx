@@ -20,6 +20,7 @@ const Header: React.FC<HeaderProps> = ({
     }
     return text;
   };
+
   return (
     <div className="bg-primary-600 text-white font-primary fixed w-full lg:static z-40">
       <div className="flex h-20 place-content-between ">
